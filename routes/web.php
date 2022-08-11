@@ -12,6 +12,36 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
+use App\Models\Category;
+use App\Models\Image;
+Route::get('/insert',function(){
+
+    //$comment = Comment::create(['the_comment'=>'hello','post_id'=>1,'user_id'=>1]);
+
+    
+});
+
+Route::get('/insert2',function(){
+   
+     /* $user = User::find(1);
+     return $user->comments;
+
+     $comment = Comment::find(1);
+     return $comment->user; */
+
+     $image = Image::find(1);
+    
+      dd($image->imagable); 
+
+
+      
+        
+        
+});
+
 
 Route::get('/', function () {
     return view('home');
