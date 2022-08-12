@@ -45,6 +45,6 @@ class User extends Authenticatable
     }
 
     public function image(){
-        return $this->morphOne(Image::class,'imagable');
+        return $this->morphOne(Image::class,'image');
     }
 }
