@@ -16,12 +16,23 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
+        $image_fakes = [
+            '1.jpg',
+            '2.jpg',
+            '3.jpg',
+            '4.jpg',
+            '5.jpg',
+            '6.jpg',
+            '7.jpg',
+            '8.jpg',
+            '9.jpg',
+
+        ];
         return [
             'name'=>fake()->word(),
             'extension'=>'jpg',
-            'path'=>'/public/image/'.fake()->word().'.'.'jpg',
-            'image_id'=> 1,
-            'image_type'=>'App\Models\Post'
+            'path'=>'images/'.fake()->randomElement($image_fakes),
+            
         ];
     }
 }
