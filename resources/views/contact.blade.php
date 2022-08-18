@@ -3,6 +3,8 @@
 @section('title', 'MyBlog | Contact')
 
 @section('content')
+
+<div class=' global-message info d-none'></div>
 <div class="colorlib-contact">
     <div class="container">
         <div class="row row-pb-md">
@@ -34,36 +36,38 @@
             </div>
             
             <div class="col-md-6">
-                <form autocomplete='off' method='POST' action="{{ route('store') }}">
+                <form onsubmit='return false' autocomplete='off' method='POST'>
                     @csrf
                     <div class="row form-group">
                         <div class="col-md-6">
                             <x-blog.form.input value='{{ old("firstName") }}' placeholder='Your firstname' name='firstName'/>
-                        </div>
-                        <div class="col-md-6">
+                    </div>
+                    <small class='error text-dager firstName'></small>
+                    <div class="col-md-6">
                           <x-blog.form.input value='{{ old("lastName") }}' placeholder='Your lastname' name='lastName'/>
                         </div>
                     </div>
-
+                    <small class='error text-dager'></small>
                     <div class="row form-group">
                         <div class="col-md-12">
                            <x-blog.form.input value='{{ old("email") }}' placeholder='Your email' type='email' name='email'/>
                         </div>
                     </div>
-
+                    <small class='error text-dager'></small>
                     <div class="row form-group">
                         <div class="col-md-12">
                         <x-blog.form.input value='{{ old("subject") }}' required='false' placeholder='Your Subject'  name='subject'/>
                         </div>
                     </div>
-
+                    <small class='error text-dager'></small>
                     <div class="row form-group">
                         <div class="col-md-12">
                         <x-blog.form.textarea value="{{ old('message') }}" placeholder='Say something about us'  name='message'/>
                         </div>
                     </div>
+                    <small class='error text-dager'></small>
                     <div class="form-group">
-                        <input type="submit" value="Send Message" class="btn btn-primary">
+                        <input type="submit" value="Send Message" class="btn btn-primary send-message-btn">
                     </div>
                 </form>
                 <x-blog.message :status="'success'"/>		
@@ -76,7 +80,7 @@
 </div>
 
 
-<div id="colorlib-subscribe" class="subs-img" style="background-image: url(images/img_bg_2.jpg);" data-stellar-background-ratio="0.5">
+<div id="colorlib-subscribe" class="subs-img" style="" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
@@ -109,3 +113,61 @@
 </div>
 @endsection
 
+@section('custom_js')
+ <script>
+   
+ $(document).on('click','.send-message-btn',(e)=>{
+     
+    e.preventDefault()
+    
+    let $this = e.target
+    
+     let csrf_token =$($this).parents('form').find("input[name='_token']").val()
+     let firstName = $($this).parents('form').find("input[name='firstName']").val()
+     let lastName = $($this).parents('form').find("input[name='lastName']").val()
+     let email = $($this).parents('form').find("input[name='email']").val()
+     let subject = $($this).parents('form').find("input[name='subject']").val()
+     let message = $($this).parents('form').find("textarea[name='message']").val()
+ 
+     let formData = new FormData()
+     formData.append('_token',csrf_token)
+     formData.append('firstName',firstName)
+     formData.append('lastName',lastName)
+     formData.append('email',email)
+     formData.append('subject',subject)
+     formData.append('message',message)
+    
+
+     $.ajax({
+
+        url:"{{ route('store') }}",
+        data:formData,
+        type:'POST',
+        dataType:'JSON',
+        processData:false,
+        contentType:false,
+        success:function(data){
+          if(data.success){
+            $('.global-message').addClass('alert, alert-info')
+             $('.global-message').removeClass('d-none')
+             $('.global-message').text(data.message)
+             
+             clearOut($($this).parents('form'),['firstName','lastName','email','subject','message'])
+             setTimeout(()=>{
+
+                $('.global-message').fadeOut()
+             },5000)
+          }else{
+                
+              for(const error in data.errors){
+                 $("small."+error).text(data.errors['error'])
+              }
+          }
+        }
+     }) 
+ 
+  })
+
+ </script>
+
+@endsection

@@ -117,9 +117,16 @@
                     </div>
                 </div>
             </div>  
-        </div>
- 
- 
- 
+        </div> 
 @endsection
  
+
+@section('custom_js')
+  <script>
+    setTimeout(() =>{
+		$('.global-message').fadeOut()
+	})
+
+  </script>
+
+@endsection 

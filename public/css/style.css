@@ -1,0 +1,16 @@
+.global-message{
+    position: fixed;
+    bottom: 10px;
+    right:10px;
+    min-width: 500px;
+    border-radius: 150px;
+    color: #fff;
+}
+
+.global-message.info{
+    background: blue;
+}
+
+.global-message.error{
+    background: red;
+}

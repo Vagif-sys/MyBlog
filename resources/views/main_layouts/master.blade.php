@@ -22,6 +22,7 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900" rel="stylesheet">
 	
+	 
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="{{ asset('blog_template/css/animate.css')}}">
 	<!-- Icomoon Icon Fonts-->
@@ -235,7 +236,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="{{ asset('blog_template/js/jquery.countTo.js') }}"></script>
 	<!-- Main -->
 	<script src="{{ asset('blog_template/js/main.js') }}"></script>
-
+	<link rel="stylesheet" href="{{  asset('css/style.css') }}">
+	<script src="{{ asset('js/functions.js') }}"></script>
+	@yield('custom_js')
 	</body>
 </html>
 
