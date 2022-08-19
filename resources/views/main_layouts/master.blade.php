@@ -64,7 +64,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-2">
-							<div id="colorlib-logo"><a href="index.html">Blog</a></div>
+							<div id="colorlib-logo"><a href="{{ route('home') }}">Blog</a></div>
 						</div>
 						<div class="col-md-10 text-right menu-1">
 							<ul>
@@ -72,11 +72,11 @@
 									<a href="{{ route('home') }}">Home</a>
 								</li>
 								<li class="has-dropdown">
-									<a href="courses.html">Categories</a>
+									<a href="{{ route('categories.index') }}">Categories</a>
 									<ul class="dropdown">
-										<li><a href="#">Programming</a></li>
-										<li><a href="#">Games</a></li>
-										<li><a href="#">Soft Skills</a></li>
+										@foreach($navbar_categories as $category)
+										<li><a href="{{ route('categories.show',$category) }}">{{ $category->name }}</a></li>
+										@endforeach
 									</ul>
 								</li>
 								<li><a href="{{ route('about') }}">About</a></li>
@@ -126,8 +126,8 @@
 					<div class="col-md-3 colorlib-widget">
 						<h4>Contact Info</h4>
 						<ul class="colorlib-footer-links">
-							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-							<li><a href="tel://1234567920"><i class="icon-phone"></i> + 1235 2355 98</a></li>
+							<li>291 South 21th Street, <br>City Baki Yasamal district</li>
+							<li><a href="tel://1234567920"><i class="icon-phone"></i> +994(012)4587977</a></li>
 							<li><a href="mailto:info@yoursite.com"><i class="icon-envelope"></i> info@yoursite.com</a></li>
 							<li><a href="http://luxehotel.com"><i class="icon-location4"></i> yourwebsite.com</a></li>
 						</ul>

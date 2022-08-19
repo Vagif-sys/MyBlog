@@ -26,7 +26,7 @@ class PostFactory extends Factory
             'slug'=> fake()->unique()->slug(),
             'body'=> fake()->sentence(),
             'user_id'=> User::factory(),
-            'category_id'=> Category::factory(),
+            'category_id'=> Category::all()->random()->id,
 
         ];
     }

@@ -14,3 +14,10 @@
 .global-message.error{
     background: red;
 }
+
+/* categories */
+
+.categories-col .block-21 .text{
+     
+    width:100%;
+}
