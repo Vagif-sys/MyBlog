@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
 
 
 use App\Http\Controllers\HomeController;
@@ -9,6 +10,9 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
+
+
+// frontend user routes
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
  //to get single  page with id
@@ -27,3 +31,10 @@ Route::get('categories/', [CategoryController::class,'index'])->name('categories
 
 Route::get('/tags/{tag:name}', [TagController::class,'show'])->name('tags.show');
 require __DIR__.'/auth.php';
+
+
+//dashboard admin routes
+Route::prefix('admin')->name('admin.')->middleware('auth','isadmin')->group(function(){
+
+    Route::get('/',[DashboardController::class,'index'])->name('index');
+});

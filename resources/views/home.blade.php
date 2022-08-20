@@ -10,7 +10,7 @@
                @forelse($posts as $post)
                 <div class="block-21 d-flex animate-box">
                     <a href="{{ route('post.show',$post) }}" class="blog-img" 
-                    style="background-image: url({{ asset('storage/'.$post->image->path.'') }});"></a>
+                    style="background-image: url({{ asset('blog_template/'.$post->image->path) }});"></a>
                     <div class="text">
                         <h3 class="heading"><a href="#">{{ $post->title }}</a></h3>
                         <p>{{ $post->desc }}</p>

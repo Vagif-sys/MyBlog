@@ -13,6 +13,7 @@ class RoleFactory extends Factory
     {
         return [
             'name' =>'user',
+            
         ];
     }
 }
