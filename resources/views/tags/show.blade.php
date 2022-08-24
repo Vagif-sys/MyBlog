@@ -22,7 +22,7 @@
                     </div>
                  </div>
                  @empty
-                 <p class='lead'>There is no posts relted to this tag</p>
+                 <p class='lead'>There is no posts related to this tag</p>
                @endforelse
               
                {{ $posts->links() }}

@@ -25,10 +25,15 @@
     <link rel="stylesheet" href="{{ asset('admin_dashboard_assets/assets/css/dark-theme.css')}}" />
     <link rel="stylesheet" href="{{ asset('admin_dashboard_assets/assets/css/semi-dark.css')}}" />
     <link rel="stylesheet" href="{{ asset('admin_dashboard_assets/assets/css/header-colors.css')}}" />
+    <link rel="stylesheet" href="{{ asset('admin_dashboard_assets/assets/css/my_style.css')}}" />
     <title>Admin Panel</title>
 </head>
 
 <body>
+    
+     @if(Session::has('success'))
+        <div class='general-message alert alert-info'>{{ Session::get('success') }}</div>
+     @endif
 	<!--wrapper-->
 	<div class="wrapper">
 		<!--start header -->

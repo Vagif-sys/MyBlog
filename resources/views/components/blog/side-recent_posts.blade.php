@@ -3,7 +3,7 @@
     <h3 class="sidebar-heading">Recent Blog</h3>
     @foreach($recent_posts as $recent_post)
     <div class="f-blog">
-        <a href="blog.html" class="blog-img" style="background-image: url({{ asset('blog_template/'.$recent_post->image->path.'') }});">
+        <a href="blog.html" class="blog-img" style="background-image: url({{ asset($recent_post->image ? 'blog_template/'.$recent_post->image->path : 'uploads/placeholders/thumbnail.png') }});">
         </a>
         <div class="desc">
             <p class="admin"><span>{{ $recent_post->created_at->diffforHumans() }}</span></p>
