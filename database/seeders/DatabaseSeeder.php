@@ -24,18 +24,21 @@ class DatabaseSeeder extends Seeder
         \App\Models\Comment::truncate();
         \App\Models\Tag::truncate();
         \App\Models\Image::truncate();
-        
+        Schema::disableForeignKeyConstraints();
+
         \App\Models\Role::factory(1)->create();
         \App\Models\Role::factory(1)->create(['name'=>'admin']);
         $users = \App\Models\User::factory(10)->create();
+        //$users = \App\Models\User::factory()->create();
         foreach($users as $user){
             $user->image()->save(\App\Models\Image::factory()->make());
         } 
 
-        Schema::disableForeignKeyConstraints();
+        
 
         //Create roles  and users
         \App\Models\Category::factory(10)->create();
+        \App\Models\Category::factory()->create(['name'=> 'uncategorized']);
         $posts = \App\Models\Post::factory(10)->create();
         \App\Models\Comment::factory(100)->create();
         \App\Models\Tag::factory(10)->create();

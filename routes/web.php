@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminPostController;
+use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\TinyMceController;
 
 
@@ -40,5 +41,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','isadmin'])->group(fu
 
     Route::get('/',[DashboardController::class,'index'])->name('index');
     Route::resource('posts', AdminPostController::class);
+    Route::resource('categories', AdminCategoryController::class);
     Route::post('upload_tinymce_image',[TinyMceController::class,'upload_tinymce_image'])->name('upload_tinymce_image');
 });
