@@ -2,7 +2,7 @@
 	@extends("admin_dashboard.layouts.app")
 
 	@section("style")
-	<link href="{{ asset('admin_dashboard_assets/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('admin_dashboard_assets/assets/plugins/input-tags/css/tagsinput.css') }}" rel="stylesheet" />
     <link href="{{ asset('admin_dashboard_assets/assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 	<link href="{{ asset('admin_dashboard_assets/assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
     <script src="https://cdn.tiny.cloud/1/itkudnxflets7aq195i54lyxfefuod07binnn1mk0ot3a12o/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -80,6 +80,10 @@
                                 </div>            
 							  </div>
                               <div class="mb-3">
+                                <label class="form-label">Post Tags</label>
+                                <input type="text" class="form-control" name='tags' data-role="tagsinput" >
+                             </div>
+                              <div class="mb-3">
 								<label for="inputProductTitle" class="form-label">Post Content</label>
                                 <textarea class="form-control" name="body" id="body" rows="8">{{ old('body') }}</textarea>
                                 @error('body')
@@ -108,14 +112,15 @@
 		@endsection
 	
 	@section("script")
-	<script src="{{  asset('admin_dashboard_assets/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js') }}"></script>
+	
 	<script src="{{  asset('admin_dashboard_assets/assets/plugins/select2/js/select2.min.js') }}"></script>
-    
+    <script src="{{  asset('admin_dashboard_assets/assets/plugins/input-tags/js/tagsinput.js') }}"></script>
     <script>
+        
 		$(document).ready(function () {
 			/* $('#image-uploadify').imageuploadify(); */
 		})
-
+   
         $('.single-select').select2({
 			theme: 'bootstrap4',
 			width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',

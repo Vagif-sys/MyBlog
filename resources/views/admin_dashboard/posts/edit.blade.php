@@ -2,7 +2,7 @@
 	@extends("admin_dashboard.layouts.app")
 
 @section("style")
-
+<link href="{{ asset('admin_dashboard_assets/assets/plugins/input-tags/css/tagsinput.css') }}" rel="stylesheet" />
 <link href="{{ asset('admin_dashboard_assets/assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('admin_dashboard_assets/assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
 <script src="https://cdn.tiny.cloud/1/itkudnxflets7aq195i54lyxfefuod07binnn1mk0ot3a12o/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -81,6 +81,10 @@
                             </div>            
                           </div>
                           <div class="mb-3">
+                                <label class="form-label">Post Tags</label>
+                                <input type="text" class="form-control" value='{{ $tags }}' name='tags' data-role="tagsinput" >
+                             </div>
+                          <div class="mb-3">
                             <label for="inputProductTitle" class="form-label">Post Content</label>
                             <textarea class="form-control" name="body" id="body" rows="8">{{ old('body',str_replace('../../../','/',$post->body)) }}</textarea>
                             @error('body')
@@ -106,15 +110,17 @@
                             </div>
                           </div>
                           <button class='btn btn-primary' type='submit'>Update Post</button>
-
-                          <form method='POST' action="{{ route('admin.posts.destroy',$post) }}">
-                               @csrf
-                               @method('DELETE')
-                               <button type='submit' class='btn btn-danger'>Delete Post</button>
-                          </form>
+                                       
+                          <a href="#" onclick="event.preventDefault(); document.getElementById('delete_post_{{ $post->id }}').submit();" onClick="return confirm('Are you sure?');" class="ms-3">
+                          <button type='submit' class='btn btn-danger'>Delete Post</button>
+                         </a> 
                         </div>
                        </div>
                     </form>  
+                    <form id='delete_post_{{ $post->id }}' method='POST' action="{{ route('admin.posts.destroy',$post) }}">
+                            @csrf
+                            @method('DELETE')
+                    </form>
                 </div>
               </div>
           </div>
@@ -128,6 +134,7 @@
 @section("script")
 <script src="{{  asset('admin_dashboard_assets/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js') }}"></script>
 <script src="{{  asset('admin_dashboard_assets/assets/plugins/select2/js/select2.min.js') }}"></script>
+<script src="{{  asset('admin_dashboard_assets/assets/plugins/input-tags/js/tagsinput.js') }}"></script>
 
 <script>
     $(document).ready(function () {

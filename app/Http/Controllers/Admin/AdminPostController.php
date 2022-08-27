@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 
 class AdminPostController extends Controller
 {
@@ -41,6 +42,7 @@ class AdminPostController extends Controller
    
     public function store(Request $request)
     {
+        
         $validated = $request->validate($this->rules);
         $validated['user_id'] = auth()->id();
         $post= Post::create($validated);
@@ -79,6 +81,19 @@ class AdminPostController extends Controller
             
         }
 
+        $tags = explode(',', $request->input('tags'));
+        $tag_ids = [];
+        foreach($tags as $tag){
+            
+            $tag_ob = Tag::create(['name'=>trim($tag)]);
+            $tag_ids[] = $tag_ob->id;
+        }
+            
+        
+        if(count($tag_ids) > 0){
+         $post->tag()->sync($tag_ids);
+        }
+
         return redirect()->route('admin.posts.create')->with('success','Post has been created');
     }
 
@@ -91,8 +106,17 @@ class AdminPostController extends Controller
    
     public function edit(Post $post)
     {
+        $tags = '';
+        foreach($post->tags as $key => $tag){
+            
+            $tags .= $tag->name; 
+            if($key !== count($post->tags)-1){
+                $tags .= ','; 
+            }
+        }
         return view('admin_dashboard.posts.edit',[
             'post'=> $post,
+            'tags'=> $tags,
             'categories'=> Category::pluck('name','id')
         ]);
     }
@@ -124,6 +148,20 @@ class AdminPostController extends Controller
             ]);
         }
 
+        $tags = explode(',', $request->input('tags'));
+        $tag_ids = [];
+        foreach($tags as $tag){
+
+            $tag_exits = $post->tags()->where('name',trim($tag))->count();
+            if($tag_exits ==0){
+                $tag_ob = Tag::create(['name'=>$tag]);
+                $tag_ids[] = $tag_ob->id;
+            }
+        }
+        if(count($tag_ids) > 0){
+         $post->tags()->syncWithoutDetaching($tag_ids);
+        }
+
         return redirect()->route('admin.posts.edit',$post)->with('success','Post has been updated');
     }
 
@@ -131,6 +169,7 @@ class AdminPostController extends Controller
     public function destroy($post)
     {
         $post =Post::where('id',$post)->first();
+        $post->tags()->delete();
         $post->delete();
         return redirect()->route('admin.posts.index')->with('success','Post has benn deleted');
     }
