@@ -12,7 +12,7 @@
                     <a href="{{ route('post.show',$post) }}" class="blog-img" 
                     style="background-image: url({{ asset('blog_template/'.$post->image->path) }});"></a>
                     <div class="text">
-                        <h3 class="heading"><a href="#">{{ $post->title }}</a></h3>
+                        <h3 class="heading"><a href="{{ route('post.show',$post) }} ">{{ $post->title }}</a></h3>
                         <p>{{ $post->desc }}</p>
                         <div class="meta">
                             <div><a href="#"><span class="icon-calendar"></span>{{ $post->created_at->diffforHumans() }}</a></div>
