@@ -5,6 +5,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Route;
+
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -28,6 +31,19 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Role::factory(1)->create();
         \App\Models\Role::factory(1)->create(['name'=>'admin']);
+         
+        $blog_routes = Route::getRoutes();
+        $permission_ids =[];
+        foreach($blog_routes as $route){
+            if(strpos($route->getName(),'admin') !== false){
+
+                $permission = \App\Models\Permission::create(['name'=>$route->getName()]);
+                $permission_ids[]=$permission->id;
+            }
+        }
+        
+        \App\Models\Role::where('name','admin')->first()->permissions()->sync($permission_ids);
+
         $users = \App\Models\User::factory(10)->create();
         //$users = \App\Models\User::factory()->create();
         foreach($users as $user){
