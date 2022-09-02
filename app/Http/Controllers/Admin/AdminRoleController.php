@@ -64,7 +64,7 @@ class AdminRoleController extends Controller
         $role->update($validated);
         $role->permissions()->sync($permissions);
         
-        return redirect()->route('admin.roles.edit')->with('success','Role has been updated');
+        return redirect()->route('admin.roles.edit',$role)->with('success','Role has been updated');
     }
 
    
