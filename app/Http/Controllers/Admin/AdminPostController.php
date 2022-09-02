@@ -91,7 +91,7 @@ class AdminPostController extends Controller
             
         
         if(count($tag_ids) > 0){
-         $post->tag()->sync($tag_ids);
+         $post->tags()->sync($tag_ids);
         }
 
         return redirect()->route('admin.posts.create')->with('success','Post has been created');
