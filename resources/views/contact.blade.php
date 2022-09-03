@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class=' global-message info d-none'></div>
+<div class='global-message info d-none'></div>
 <div class="colorlib-contact">
     <div class="container">
         <div class="row row-pb-md">
@@ -39,33 +39,36 @@
                 <form onsubmit='return false' autocomplete='off' method='POST'>
                     @csrf
                     <div class="row form-group">
-                        <div class="col-md-6">
-                            <x-blog.form.input value='{{ old("firstName") }}' placeholder='Your firstname' name='firstName'/>
-                    </div>
-                    <small class='error text-dager firstName'></small>
-                    <div class="col-md-6">
-                          <x-blog.form.input value='{{ old("lastName") }}' placeholder='Your lastname' name='lastName'/>
-                        </div>
-                    </div>
-                    <small class='error text-dager'></small>
-                    <div class="row form-group">
-                        <div class="col-md-12">
-                           <x-blog.form.input value='{{ old("email") }}' placeholder='Your email' type='email' name='email'/>
-                        </div>
-                    </div>
-                    <small class='error text-dager'></small>
-                    <div class="row form-group">
-                        <div class="col-md-12">
-                        <x-blog.form.input value='{{ old("subject") }}' required='false' placeholder='Your Subject'  name='subject'/>
-                        </div>
-                    </div>
-                    <small class='error text-dager'></small>
-                    <div class="row form-group">
-                        <div class="col-md-12">
-                        <x-blog.form.textarea value="{{ old('message') }}" placeholder='Say something about us'  name='message'/>
-                        </div>
-                    </div>
-                    <small class='error text-dager'></small>
+								<div class="col-md-6">
+									<x-blog.form.input value='{{ old("firstName") }}' placeholder='Your Firstname' name="firstName" />
+									<small class='error text-danger firstName'></small>
+								</div>
+								<div class="col-md-6">
+									<x-blog.form.input value='{{ old("lastName") }}' placeholder='Your Lastname' name="lastName" />
+									<small class='error text-danger lastName'></small>
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-md-12">
+									<x-blog.form.input value='{{ old("email") }}' placeholder='Your Email' type='email' name="email" />
+									<small class='error text-danger email'></small>
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-md-12">
+									<x-blog.form.input value='{{ old("subject") }}' required='false' name="subject" placeholder='Your Subject' />
+									<small class='error text-danger subject'></small>
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-md-12">
+									<x-blog.form.textarea value='{{ old("message") }}' placeholder='What you want to tell us.' name="message" />
+									<small class='error text-danger message'></small>
+								</div>
+							</div>
                     <div class="form-group">
                         <input type="submit" value="Send Message" class="btn btn-primary send-message-btn">
                     </div>
@@ -78,39 +81,6 @@
         </div>
     </div>
 </div>
-
-
-<div id="colorlib-subscribe" class="subs-img" style="" data-stellar-background-ratio="0.5">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
-                <h2>Subscribe Newsletter</h2>
-                <p>Subscribe our newsletter and get latest update</p>
-            </div>
-        </div>
-        <div class="row animate-box">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="row">
-                    <div class="col-md-12">
-                    <form class="form-inline qbstp-header-subscribe">
-                        <div class="col-three-forth">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="email" placeholder="Enter your email">
-                            </div>
-                        </div>
-                        <div class="col-one-third">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Subscribe Now</button>
-                            </div>
-                        </div>
-                    </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('custom_js')
@@ -119,6 +89,8 @@
  $(document).on('click','.send-message-btn',(e)=>{
      
     e.preventDefault()
+
+   
     
     let $this = e.target
     
@@ -148,23 +120,25 @@
         contentType:false,
         success:function(data){
           if(data.success){
-            $('.global-message').addClass('alert, alert-info')
-             $('.global-message').removeClass('d-none')
+            
+            $('.global-message').addClass('alert , alert-info')
+            $('.global-message').fadeIn()
              $('.global-message').text(data.message)
              
              clearOut($($this).parents('form'),['firstName','lastName','email','subject','message'])
+             
              setTimeout(()=>{
-
+            
                 $('.global-message').fadeOut()
-             },5000)
+             },5000) 
           }else{
                 
-              for(const error in data.errors){
+               for(const error in data.errors){
                  $("small."+error).text(data.errors['error'])
-              }
-          }
+              } 
+          } 
         }
-     }) 
+     })  
  
   })
 

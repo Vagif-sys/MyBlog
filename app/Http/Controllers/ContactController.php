@@ -15,8 +15,9 @@ class ContactController extends Controller
     }
 
     public function store(){
-
         
+       
+       
         $data = array();
         $data['success'] = 0;
         $data['errors'] = [];
@@ -38,6 +39,8 @@ class ContactController extends Controller
         }else{
 
             $attributes=$validated->validated();
+            //return response()->json($attributes);
+
             Contact::create($attributes);
             Mail::to('vagifhuseyn3@gmail.com')->send(new ContactMail(
                 $attributes['firstName'],
