@@ -105,8 +105,21 @@
                 </li>
                 <li>
                     <a href="{{ route('admin.contacts') }}" >
-                    <div class="parent-icon"><i class='bx bx-home-mail-send'></i></div>
+                    <div class="parent-icon"><i class='bx bx-mail-send'></i></div>
                         <div class="menu-title">Contacts</div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.about.edit') }}" >
+                    <div class="parent-icon"><i class='bx bx-bulb'></i></div>
+                        <div class="menu-title">About</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('home') }}" >
+                    <div class="parent-icon"><i class='bx bx-site'></i></div>
+                        <div class="menu-title">Visit Site</div>
                     </a>
                 </li>
             </ul>

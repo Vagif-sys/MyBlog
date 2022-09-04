@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminCommentController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminContactController;
+use App\Http\Controllers\Admin\AdminAboutController;
 use App\Http\Controllers\Admin\TinyMceController;
 
 
@@ -53,5 +54,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','check_permission'])-
     Route::resource('users', AdminUserController::class);
     Route::get('contacts', [AdminContactController::class,'index'])->name('contacts');
     Route::delete('contacts/{contact}', [AdminContactController::class,'destroy'])->name('contacts.destroy');
+    Route::get('about', [AdminAboutController::class,'edit'])->name('about.edit');
+    Route::post('about', [AdminAboutController::class,'update'])->name('about.update');
     Route::post('upload_tinymce_image',[TinyMceController::class,'upload_tinymce_image'])->name('upload_tinymce_image');
 });
