@@ -8,6 +8,8 @@
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="author" content="" />
+	<meta name="_token" content="{{ csrf_token() }}" />
+	
 
   <!-- Facebook and Twitter integration -->
 	<meta property="og:title" content=""/>
@@ -19,6 +21,7 @@
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
+	
 
 	<link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900" rel="stylesheet">
 	
@@ -119,7 +122,37 @@
 		</aside>
 
         @yield('content')
-
+	<div id="colorlib-subscribe" class="subs-img" style="background-image: url(blog_template/images/img_bg_2.jpg);" data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
+					<h2>Subscribe Newsletter</h2>
+					<p>Subscribe our newsletter and get latest update</p>
+				</div>
+			</div>
+			<div class="row animate-box">
+				<div class="col-md-6 col-md-offset-3">
+					<div class="row">
+						<div class="col-md-12">
+						<form class="form-inline qbstp-header-subscribe">
+							<div class="col-three-forth">
+								<div class="form-group">
+									<input name='subscribe-email' type="text" class="form-control" id="email" placeholder="Enter your email">
+								</div>
+							</div>
+							<div class="col-one-third">
+								<div class="form-group">
+									<button id='subscriber-btn' type="submit" class="btn btn-primary">Subscribe Now</button>
+								</div>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
         <footer id="colorlib-footer">
 			<div class="container">
 				<div class="row row-pb-md">
@@ -238,6 +271,56 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="{{ asset('blog_template/js/main.js') }}"></script>
 	<link rel="stylesheet" href="{{  asset('css/style.css') }}">
 	<script src="{{ asset('js/functions.js') }}"></script>
+	<script>
+     $(function(){
+		function isEmail(email) {
+			var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			return regex.test(email);
+		}
+	   $(document).on('click','#subscriber-btn',(e)=>{
+
+		    e.preventDefault();
+            let _this = $(e.target);
+			let email = _this.parents('form').find("input[name='subscribe-email']").val()
+			if(!isEmail(email)){
+				$('body').append('<div class="global-message alert alert-danger subscriber-error">This is invalid email</div>')
+			}else{
+				//send  ajax and  store data
+				let formData = new FormData();
+				let _token = $("meta[name='_token']").attr('content')
+				formData.append('_token', _token)
+				formData.append('email', email)
+				$.ajax({
+					headers: {
+						'X-CSRF-TOKEN': "{{ csrf_token() }}"
+					},
+					url:"{{ route('newsletter_store') }}",
+					type:'POST',
+					dataType:'JSON',
+					processData:false,
+					contentType:false,
+					data:formData,
+					success:(respond)=>{
+						let message = respond.message
+						$('body').append('<div class="global-message alert alert-danger subscriber-success">'+message +'</div>')
+						_this.parents('form').find("input[name='subscribe-email']").val('')
+					},
+
+				    statusCode: {
+						500: ()=>{
+							$('body').append('<div class="global-message alert alert-danger subscriber-error">This Email is already taken</div>')
+						}
+					}
+				})
+			}
+
+			setTimeout( ()=>{
+
+				$('.global-message.subscriber-error,.global-message.subscriber-success').hide()
+			},5000)
+	   })
+	 })
+	</script>
 	@yield('custom_js')
 	</body>
 </html>

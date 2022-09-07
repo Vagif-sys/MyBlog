@@ -124,8 +124,9 @@ class AdminPostController extends Controller
   
     public function update(Request $request, Post $post)
     {
-        $this->rules['thumbnail'] = 'nullable|file|mimes:jpg,png,svg,jpeg';
-        $validated = $request->validate($this->rules);
+         $this->rules['thumbnail'] = 'nullable|file|mimes:jpg,png,svg,jpeg';
+        $validated = $request->validate($this->rules); 
+        $validated['approved']=$request->input('approved') !== null;
         
         $post->update($validated);
 

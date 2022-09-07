@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignId('category_id');
             $table->foreignId('user_id');
             
-            $table->string('status')->default('published');
+            $table->boolean('approved')->default(true);
             $table->integer('views')->default(0);
             $table->timestamps();
         });

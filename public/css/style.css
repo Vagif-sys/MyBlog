@@ -17,6 +17,18 @@
     background: red;
 }
 
+.subscriber-error{
+    background:#931d1d;
+    border-color:#931d1d;
+    
+}
+
+.subscriber-success{
+    background:#0cd1df;
+    border-color:#0cd1df;
+    
+}
+
 /* categories */
 
 .categories-col .block-21 .text{

@@ -11,7 +11,7 @@ use App\Models\Image;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'desc','slug','body','user_id','category_id'];
+    protected $fillable = ['title', 'desc','slug','body','user_id','category_id','approved'];
     
     public function author(){
         return $this->belongsTo(User::class,'user_id');
@@ -32,5 +32,9 @@ class Post extends Model
 
     public function image(){
         return $this->morphOne(Image::class,'image');
+    }
+
+    public function scopeApproved($query){
+        return $query->where('approved',1);
     }
 }
